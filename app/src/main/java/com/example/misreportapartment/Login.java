@@ -10,48 +10,46 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class Login extends AppCompatActivity {
 
 
-    SQLiteDatabase db;
-    SQLiteOpenHelper openHelper;
-    Button _btnLogin;
-    EditText _txtEmail, _txtPass;
-    Cursor cursor;
-
+    private Button _btnLogin;
+    private EditText _txtEmail, _txtPass;
+    private TextView myTextViewRegister;
+    private DatabaseHelper db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        openHelper = new DatabaseHelper(this);
-        db = openHelper.getReadableDatabase();
-        _btnLogin = (Button)findViewById(R.id.btnSend);
-        _txtEmail = (EditText) findViewById(R.id.txtEmail);
-        _txtPass = (EditText) findViewById(R.id.txtMessage);
-        _btnLogin.setOnClickListener(new View.OnClickListener() {
+        db = new DatabaseHelper(this);
+        _btnLogin = findViewById(R.id.btnRegister);
+        _txtEmail = findViewById(R.id.txtEmail);
+        _txtPass = findViewById(R.id.txtPass);
+        myTextViewRegister = findViewById(R.id.textview_register);
+        myTextViewRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = _txtEmail.getText().toString();
-                String pass = _txtPass.getText().toString();
-                cursor = db.rawQuery("SELECT * FROM " + DatabaseHelper.TABLE_NAME + " WHERE " + DatabaseHelper.COL_5 + " =? AND " + DatabaseHelper.COL_4 + " =? ", new String[]{email, pass});
-                if (cursor!=null){
-                    if (cursor.getCount() > 0){
-                        cursor.moveToNext();
-                        Toast.makeText(getApplicationContext(), " Login succesfully ", Toast.LENGTH_LONG).show();
-                    }else {
-                        Toast.makeText(getApplicationContext(), " error ", Toast.LENGTH_LONG).show();
-                    }
-                }
+                Intent registerIntent = new Intent(Login.this, Register.class);
+                startActivity(registerIntent);
             }
         });
         _btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Login.this, Form.class);
-                startActivity(intent);
+                String user = _txtEmail.getText().toString().trim();
+                String pwd = _txtPass.getText().toString().trim();
+                Boolean res = db.checkUser(user, pwd);
+                if (res == true){
+                    Toast.makeText(Login.this, "Successfully logged in", Toast.LENGTH_SHORT).show();
+                    Intent registerIntent = new Intent(Login.this, usersForm.class);
+                    startActivity(registerIntent);
+                }else {
+                    Toast.makeText(Login.this, "Login error", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
