@@ -47,6 +47,7 @@
         android:text="Login"
         android:background="#24a0ed"
         android:textColor="#ffffff"
+        android:onClick="login"
         tools:layout_editor_absoluteX="161dp" />
 
     <LinearLayout

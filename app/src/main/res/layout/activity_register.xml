@@ -53,6 +53,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="0dp" />
 
+
     <EditText
         android:id="@+id/txtCnfPass"
         android:layout_width="190dp"
@@ -85,8 +86,8 @@
             android:layout_width="wrap_content"
             android:layout_height="38dp"
             android:text="@string/already_registered"
-            android:textColor="#2f4f4f"
-            android:textSize="15dp"
+            android:textColor="#313435"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <TextView
@@ -100,5 +101,12 @@
             android:textStyle="bold" />
 
     </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar1"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible" />
 
 </LinearLayout>

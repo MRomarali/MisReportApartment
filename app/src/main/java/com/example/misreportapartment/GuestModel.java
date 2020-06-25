@@ -47,12 +47,6 @@ public class GuestModel {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("GuestModel{");
-        sb.append("id=").append(id);
-        sb.append(", userName='").append(userName).append('\'');
-        sb.append(", phone='").append(phone).append('\'');
-        sb.append(", password='").append(password).append('\'');
-        sb.append('}');
-        return sb.toString();
+        return "ID: " + id + " ,USERNAME: " + userName + " ,PHONE: " + phone + " ,PASSWORD: "+ password;
     }
 }

@@ -35,13 +35,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean addUser(String user, String phone, String password){
+    public boolean addUser(GuestModel guestToAdd){
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_2, user);
-        contentValues.put(COL_3, phone);
-        contentValues.put(COL_4, password);
+        contentValues.put(COL_2, guestToAdd.getUserName());
+        contentValues.put(COL_3, guestToAdd.getPhone());
+        contentValues.put(COL_4, guestToAdd.getPassword());
         long res = db.insert(TABLE_NAME,null,contentValues);
         if (res == -1){
             db.close();
@@ -91,21 +91,5 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         cursor.close();
         return result;
-    }
-
-    public boolean deleteGuest(GuestModel guestToRemove){
-        SQLiteDatabase db = this.getWritableDatabase();
-        String delete_guest_query = "DELETE FROM * " + TABLE_NAME + " WHERE " + COL_1 + " = " + guestToRemove.getId();
-        Cursor cursor = db.rawQuery(delete_guest_query, null);
-
-        if (cursor.moveToFirst()){
-            db.close();
-            cursor.close();
-            return false;
-        }else {
-            db.close();
-            cursor.close();
-            return true;
-        }
     }
 }

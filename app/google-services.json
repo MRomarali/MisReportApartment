@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "818738504870",
+    "project_id": "misreportapartment",
+    "storage_bucket": "misreportapartment.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:818738504870:android:5c3532656082e805618067",
+        "android_client_info": {
+          "package_name": "com.example.misreportapartment"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "818738504870-jh7kjff6nv67jn3hjpieq7ehqb9r95ln.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.misreportapartment",
+            "certificate_hash": "2ace39d7b2f312eb8ead4a7c45627c67e419c6f7"
+          }
+        },
+        {
+          "client_id": "818738504870-vi0lflhri441upkf295vvmq019jqlp8j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyByVx6CZ4a2Q2ASnPfvKTVs0GX6aeyUrqU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "818738504870-vi0lflhri441upkf295vvmq019jqlp8j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
