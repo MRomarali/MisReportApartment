@@ -1,4 +1,4 @@
-package com.example.misreportapartment;
+package com.example.misreportapartment.Database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -8,8 +8,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import com.example.misreportapartment.Model.Guest;
+
 import java.util.ArrayList;
-import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -23,7 +24,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public DatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME,null, 1);
     }
-
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, phone INT, password TEXT) ");
@@ -35,7 +35,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean addUser(GuestModel guestToAdd){
+    public boolean addUser(Guest guestToAdd){
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
@@ -65,31 +65,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         else
             return false;
     }
-    public List<GuestModel> getAllInfoFromUser(){
+    public ArrayList<Guest> getUserInfo(){
 
-        List<GuestModel> result = new ArrayList<>();
+        ArrayList<Guest> result = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String get_all_info_query = "SELECT * FROM " + TABLE_NAME;
+        String get_all_info_query = "SELECT * FROM " + TABLE_NAME + " WHERE username = " + COL_2 + " and " + COL_3;
 
         Cursor cursor = db.rawQuery(get_all_info_query, null);
 
-        if (cursor.moveToFirst()){
-            do {
-                int id = cursor.getInt(0);
-                String userName = cursor.getString(1);
-                String phone = cursor.getString(2);
-                String password = cursor.getString(3);
-
-                GuestModel tempGuest = new GuestModel(id,userName,phone, password);
-
-                result.add(tempGuest);
-
-            }while (cursor.moveToNext());
-        }else {
-            //Do something
+        while (cursor.moveToNext()){
+            String userName = cursor.getString(1);
+            String phone = cursor.getString(2);
+            Guest tempGuest = new Guest(userName,phone);
+            result.add(tempGuest);
         }
-        cursor.close();
-        return result;
+                cursor.close();
+                return result;
     }
 }

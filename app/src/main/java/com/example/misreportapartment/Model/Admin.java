@@ -1,12 +1,12 @@
-package com.example.misreportapartment;
+package com.example.misreportapartment.Model;
 
-public class AdminModel {
+public class Admin {
     private int id;
     private String adminUserName;
     private String password;
     private String cnf_password;
 
-    public AdminModel(int id, String adminUserName, String password, String cnf_password) {
+    public Admin(int id, String adminUserName, String password, String cnf_password) {
         this.id = id;
         this.adminUserName = adminUserName;
         this.password = password;

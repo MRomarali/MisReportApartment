@@ -1,10 +1,10 @@
 package com.example.misreportapartment;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -13,19 +13,29 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.misreportapartment.Database.DatabaseHelper;
+import com.example.misreportapartment.Model.Guest;
+
 public class Register extends AppCompatActivity {
+    public final static String SHARED_PREF_USERIFNO = "SHAREDPREF";
+    public final static String TEXTVIEW_USERNAME = "TEXTVIEW_TEXT_NAME";
+    public final static String TEXTVIEW_PASSWORD = "TEXTVIEW_TEXT_PASS";
 
     private Button btnReg;
-    private TextView myTextViewLogin;
+    private TextView myTextViewLogin, myTextView, myTextViewPhone;
     private EditText txtUsername, txtPassword, txtCnfPassword, txtPhone;
     private DatabaseHelper db;
-    private ArrayAdapter adp;
     private ProgressBar progressBar;
+    String user;
+    String phone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        myTextView = findViewById(R.id.textv_username1);
+        myTextViewPhone = findViewById(R.id.text_2);
         progressBar = findViewById(R.id.progressBar1);
         db = new DatabaseHelper(this);
         txtUsername = findViewById(R.id.txtEmail);
@@ -45,11 +55,14 @@ public class Register extends AppCompatActivity {
         btnReg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String user = txtUsername.getText().toString().trim();
-                String phone = txtPhone.getText().toString().trim();
+                user = txtUsername.getText().toString().trim();
+                Toast.makeText(Register.this, "Name: " + user, Toast.LENGTH_SHORT).show();
+                myTextView.setText(user);
+                phone = txtPhone.getText().toString().trim();
+                myTextViewPhone.setText(phone);
                 String pwd = txtPassword.getText().toString().trim();
                 String cnf_pwd = txtCnfPassword.getText().toString().trim();
-                GuestModel guestToAdd = new GuestModel(-1, user, phone,pwd);
+                Guest guestToAdd = new Guest(-1, user, phone,pwd);
                 boolean status = db.addUser(guestToAdd);
                 if (pwd.equals(cnf_pwd)){
 
@@ -80,12 +93,36 @@ public class Register extends AppCompatActivity {
                       txtPassword.setError("Password must be 6 or more characters");
                       return;
                  }
-
-                  progressBar.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.VISIBLE);
+                saveUsername();
+                savePassword();
+            }
+        });
+        btnReg.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                loadData();
+                return true;
             }
         });
     }
-    private void updateViews() {
-        adp = new ArrayAdapter<GuestModel>(this, android.R.layout.simple_list_item_1, db.getAllInfoFromUser());
+
+    public void saveUsername(){
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_USERIFNO, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(TEXTVIEW_USERNAME, user);
+        editor.apply();
+    }
+    public void savePassword(){
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_USERIFNO, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(TEXTVIEW_PASSWORD, phone);
+        editor.apply();
+    }
+    public void loadData(){
+        SharedPreferences sharedPrefName = getSharedPreferences(SHARED_PREF_USERIFNO, MODE_PRIVATE);
+        user = sharedPrefName.getString(TEXTVIEW_USERNAME, "");
+        phone = sharedPrefName.getString(TEXTVIEW_PASSWORD, "");
+        Toast.makeText(this, "user: " + user + " phone: "+ phone, Toast.LENGTH_SHORT).show();
     }
 }

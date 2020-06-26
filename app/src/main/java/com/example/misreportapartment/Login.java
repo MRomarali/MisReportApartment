@@ -10,19 +10,22 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.misreportapartment.Database.DatabaseHelper;
+
 
 public class Login extends AppCompatActivity {
-
 
     private Button _btnLogin;
     private EditText _txtEmail, _txtPass;
     private TextView myTextViewRegister;
     private DatabaseHelper db;
+
+    String user;
+    String pwd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         db = new DatabaseHelper(this);
         _btnLogin = findViewById(R.id.btnRegister);
         _txtEmail = findViewById(R.id.txtEmail);
@@ -38,8 +41,8 @@ public class Login extends AppCompatActivity {
         _btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String user = _txtEmail.getText().toString().trim();
-                String pwd = _txtPass.getText().toString().trim();
+                user = _txtEmail.getText().toString().trim();
+                pwd = _txtPass.getText().toString().trim();
                 Boolean res = db.checkUser(user, pwd);
                 if (res == true){
                     Toast.makeText(Login.this, "Successfully logged in", Toast.LENGTH_SHORT).show();
@@ -52,13 +55,8 @@ public class Login extends AppCompatActivity {
         });
     }
 
+
     public void login(View view) {
     }
 
-    public void saveData(){
-
-    }
-    public void loadData(){
-
-    }
 }

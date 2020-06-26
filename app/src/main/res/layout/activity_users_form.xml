@@ -15,12 +15,11 @@
         android:layout_marginTop="50dp"
         app:srcCompat="@drawable/home_logo"/>
 
-    <EditText
-        android:id="@+id/input_email"
+    <ListView
+        android:id="@+id/listView1"
         android:layout_width="190dp"
         android:layout_height="40dp"
         android:layout_marginTop="10dp"
-        android:background="#ffffff"
         android:drawableLeft="@drawable/user_blue"
         android:hint="USERNAME"
         android:inputType="textEmailAddress"
@@ -28,28 +27,16 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="0dp" />
 
-    <EditText
-        android:id="@+id/input_phone"
+    <ListView
+        android:id="@+id/listView2"
         android:layout_width="190dp"
         android:layout_height="40dp"
         android:layout_marginTop="20dp"
-        android:background="#ffffff"
         android:drawableLeft="@drawable/phone_number"
         android:hint="PHONE"
         android:inputType="phone"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="0dp" />
-
-    <ListView
-        android:id="@+id/list_guest_list"
-        android:layout_width="190dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="20dp"
-        android:background="#ffffff"
-        android:hint="text"
-        android:inputType="text"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp"/>
 
     <EditText
         android:id="@+id/txtMessage"
