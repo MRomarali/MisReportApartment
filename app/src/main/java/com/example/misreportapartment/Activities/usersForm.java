@@ -1,22 +1,26 @@
-package com.example.misreportapartment;
+package com.example.misreportapartment.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.misreportapartment.Adapters.MyAdapter;
 import com.example.misreportapartment.Database.DatabaseHelper;
 import com.example.misreportapartment.Model.Guest;
+import com.example.misreportapartment.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class usersForm extends AppCompatActivity {
+public class usersForm extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     public final static String SHARED_PREF_USERIFNO = "SHAREDPREF";
     public final static String TEXTVIEW_USERNAME = "TEXTVIEW_TEXT_NAME";
     public final static String TEXTVIEW_PASSWORD = "TEXTVIEW_TEXT_PASS";
@@ -24,12 +28,18 @@ public class usersForm extends AppCompatActivity {
     private ListView _txtEmail, _txtPhone;
     ArrayList<Guest> arrayList;
     MyAdapter myAdapter;
+    Spinner spinner;
+    ArrayAdapter<CharSequence> arrayAdapter;
     String user;
     String phone;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_users_form);
+        spinner = findViewById(R.id.spinner1);
+        arrayAdapter = ArrayAdapter.createFromResource(this, R.array.apartment, android.R.layout.simple_spinner_item);
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(arrayAdapter);
         _txtEmail = findViewById(R.id.listView1);
         _txtPhone = findViewById(R.id.listView2);
         db = new DatabaseHelper(this);
@@ -43,7 +53,7 @@ public class usersForm extends AppCompatActivity {
         password.append(" Phone " + guestModels.get(0).getPhone());
         _txtEmail.setSelection(1);
         _txtPhone.setSelection(2);
-
+        spinner.setOnItemSelectedListener(this);
 
     }
 
@@ -77,5 +87,16 @@ public class usersForm extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(TEXTVIEW_PASSWORD, phone);
         editor.apply();
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        String text = parent.getItemAtPosition(position).toString();
+        Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }

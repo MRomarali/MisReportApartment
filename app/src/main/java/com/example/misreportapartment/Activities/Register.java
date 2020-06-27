@@ -1,4 +1,4 @@
-package com.example.misreportapartment;
+package com.example.misreportapartment.Activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.misreportapartment.Database.DatabaseHelper;
 import com.example.misreportapartment.Model.Guest;
+import com.example.misreportapartment.R;
 
 public class Register extends AppCompatActivity {
     public final static String SHARED_PREF_USERIFNO = "SHAREDPREF";

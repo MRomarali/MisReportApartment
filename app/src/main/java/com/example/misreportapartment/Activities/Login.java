@@ -1,4 +1,4 @@
-package com.example.misreportapartment;
+package com.example.misreportapartment.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.misreportapartment.Database.DatabaseHelper;
+import com.example.misreportapartment.R;
 
 
 public class Login extends AppCompatActivity {

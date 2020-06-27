@@ -70,7 +70,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ArrayList<Guest> result = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String get_all_info_query = "SELECT * FROM " + TABLE_NAME + " WHERE username = " + COL_2 + " and " + COL_3;
+        String get_all_info_query = "SELECT * FROM " + TABLE_NAME + " WHERE username = " + COL_2;
 
         Cursor cursor = db.rawQuery(get_all_info_query, null);
 

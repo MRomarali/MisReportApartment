@@ -1,8 +1,10 @@
-package com.example.misreportapartment;
+package com.example.misreportapartment.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.misreportapartment.R;
 
 public class adminsForm extends AppCompatActivity {
 
