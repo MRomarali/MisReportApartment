@@ -14,7 +14,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.misreportapartment.Database.DatabaseHelper;
-import com.example.misreportapartment.Model.Guest;
+import com.example.misreportapartment.Model.User;
 import com.example.misreportapartment.R;
 
 public class Register extends AppCompatActivity {
@@ -63,7 +63,7 @@ public class Register extends AppCompatActivity {
                 myTextViewPhone.setText(phone);
                 String pwd = txtPassword.getText().toString().trim();
                 String cnf_pwd = txtCnfPassword.getText().toString().trim();
-                Guest guestToAdd = new Guest(-1, user, phone,pwd);
+                User guestToAdd = new User(-1, user, phone,pwd);
                 boolean status = db.addUser(guestToAdd);
                 if (pwd.equals(cnf_pwd)){
 

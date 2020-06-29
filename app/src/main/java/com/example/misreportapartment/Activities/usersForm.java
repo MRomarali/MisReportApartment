@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import com.example.misreportapartment.Adapters.MyAdapter;
 import com.example.misreportapartment.Database.DatabaseHelper;
-import com.example.misreportapartment.Model.Guest;
+import com.example.misreportapartment.Model.User;
 import com.example.misreportapartment.R;
 
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ public class usersForm extends AppCompatActivity implements AdapterView.OnItemSe
     public final static String TEXTVIEW_PASSWORD = "TEXTVIEW_TEXT_PASS";
     private DatabaseHelper db;
     private ListView _txtEmail, _txtPhone;
-    ArrayList<Guest> arrayList;
+    ArrayList<User> arrayList;
     MyAdapter myAdapter;
     Spinner spinner;
     ArrayAdapter<CharSequence> arrayAdapter;
@@ -46,7 +46,7 @@ public class usersForm extends AppCompatActivity implements AdapterView.OnItemSe
         arrayList = new ArrayList<>();
         _txtEmail = findViewById(R.id.listView1);
         _txtPhone = findViewById(R.id.listView2);
-        List<Guest> guestModels = db.getUserInfo();
+        List<User> guestModels = db.getUserInfo();
         StringBuilder userName = new StringBuilder();
         StringBuilder password = new StringBuilder();
         userName.append("Username " + guestModels.get(0).getUserName());

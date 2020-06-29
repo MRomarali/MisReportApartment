@@ -1,19 +1,28 @@
 package com.example.misreportapartment.Model;
 
-public class Guest {
+public class User {
     private int id;
     private String userName;
     private String phone;
     private String password;
 
-    public Guest(int id, String userName, String phone, String password) {
+    public User() {
+    }
+
+    public User(int id, String userName, String phone, String password) {
         this.id = id;
         this.userName = userName;
         this.phone = phone;
         this.password = password;
     }
 
-    public Guest(String userName, String phone) {
+    public User(int id, String userName, String phone) {
+        this.id = id;
+        this.userName = userName;
+        this.phone = phone;
+    }
+
+    public User(String userName, String phone) {
         this.userName = userName;
         this.phone = phone;
     }

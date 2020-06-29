@@ -8,41 +8,38 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
-import com.example.misreportapartment.Model.Guest;
+import com.example.misreportapartment.Model.User;
+import com.example.misreportapartment.Utils.Util;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-
-
-    public static final String DATABASE_NAME="register.db";
-    public static final String TABLE_NAME="register";
-    public static final String COL_1    ="ID";
-    public static final String COL_2    ="username";
-    public static final String COL_3    ="phone";
-    public static final String COL_4 ="password";
     public DatabaseHelper(@Nullable Context context) {
-        super(context, DATABASE_NAME,null, 1);
+        super(context, Util.DATABASE_NAME,null, Util.DATABASE_VERSION);
     }
+
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE " + TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, phone INT, password TEXT) ");
+        String CREATE_REGISTER_TABLE = "CREATE TABLE " + Util.TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, phone INT, password TEXT) ";
+        db.execSQL(CREATE_REGISTER_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL(" DROP TABLE IF EXISTS " + TABLE_NAME);// DROP OLDER TABLE IF EXISTS
+        String DROP_TABLE_IF_EXISTS =" DROP TABLE IF EXISTS " + Util.TABLE_NAME;// DROP OLDER TABLE IF EXISTS
+        db.execSQL(DROP_TABLE_IF_EXISTS);
         onCreate(db);
     }
 
-    public boolean addUser(Guest guestToAdd){
+    public boolean addUser(User guestToAdd){
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_2, guestToAdd.getUserName());
-        contentValues.put(COL_3, guestToAdd.getPhone());
-        contentValues.put(COL_4, guestToAdd.getPassword());
-        long res = db.insert(TABLE_NAME,null,contentValues);
+        contentValues.put(Util.COL_2, guestToAdd.getUserName());
+        contentValues.put(Util.COL_3, guestToAdd.getPhone());
+        contentValues.put(Util.COL_4, guestToAdd.getPassword());
+        long res = db.insert(Util.TABLE_NAME,null,contentValues);
         if (res == -1){
             db.close();
             return false;
@@ -52,11 +49,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
     public boolean checkUser(String username, String password){
-        String[] columns = { COL_1 };
+        String[] columns = { Util.COL_1 };
         SQLiteDatabase db = getReadableDatabase();
-        String selection = COL_2 + "=?" + " and " + COL_4 + "=?";
+        String selection = Util.COL_2 + "=?" + " and " + Util.COL_4 + "=?";
         String[] selectionArgs =  {username,password};
-        Cursor cursor = db.query(TABLE_NAME, columns,selection, selectionArgs, null,null,null);
+        Cursor cursor = db.query(Util.TABLE_NAME, columns,selection, selectionArgs, null,null,null);
         int count = cursor.getCount();
         cursor.close();
         db.close();
@@ -65,22 +62,52 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         else
             return false;
     }
-    public ArrayList<Guest> getUserInfo(){
+    public List<User> getUserInfo(){
 
-        ArrayList<Guest> result = new ArrayList<>();
+        List<User> result = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String get_all_info_query = "SELECT * FROM " + TABLE_NAME + " WHERE username = " + COL_2;
+        String get_all_info_query = "SELECT * FROM " + Util.TABLE_NAME;// + " WHERE username = " + Util.COL_2
 
         Cursor cursor = db.rawQuery(get_all_info_query, null);
 
-        while (cursor.moveToNext()){
-            String userName = cursor.getString(1);
-            String phone = cursor.getString(2);
-            Guest tempGuest = new Guest(userName,phone);
-            result.add(tempGuest);
+        if (cursor.moveToFirst()){
+            do {
+                User guest = new User();
+                guest.setId(cursor.getInt(0));
+                guest.setUserName(cursor.getString(1));
+                guest.setPhone(cursor.getString(2));
+                guest.setPassword(cursor.getString(4));
+                result.add(guest);
+            }
+            while (cursor.moveToNext());
         }
-                cursor.close();
-                return result;
+        cursor.close();
+        return result;
+    }
+
+    public User getUserInfo(int id){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(Util.TABLE_NAME, new String[]{Util.COL_1, Util.COL_2, Util.COL_3, Util.COL_4},
+                Util.COL_1 + "=?", new String[] {String.valueOf(id)}, null, null, null, null);
+         if (cursor != null)
+            cursor.moveToFirst();
+            User guest = new User(cursor.getInt(0),
+                    cursor.getString(1), cursor.getString(2));
+        return guest;
+    }
+
+    public int updateUser(User user){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(Util.COL_2, user.getUserName());
+        contentValues.put(Util.COL_3, user.getPhone());
+        contentValues.put(Util.COL_4, user.getPassword());
+
+        //Update row
+        return db.update(Util.TABLE_NAME, contentValues, Util.COL_1 + "=?",
+                new String[]{String.valueOf(Util.COL_1)});
+
     }
 }
