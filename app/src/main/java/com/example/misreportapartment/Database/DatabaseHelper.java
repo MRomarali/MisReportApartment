@@ -62,7 +62,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         else
             return false;
     }
-    public List<User> getUserInfo(){
+
+    /*public List<User> getUserInfo(){
 
         List<User> result = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -77,7 +78,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 guest.setId(cursor.getInt(0));
                 guest.setUserName(cursor.getString(1));
                 guest.setPhone(cursor.getString(2));
-                guest.setPassword(cursor.getString(4));
+                guest.setPassword(cursor.getString(3));
                 result.add(guest);
             }
             while (cursor.moveToNext());
@@ -86,16 +87,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result;
     }
 
+     */
+
     public User getUserInfo(int id){
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.query(Util.TABLE_NAME, new String[]{Util.COL_1, Util.COL_2, Util.COL_3, Util.COL_4},
+        Cursor cursor = db.query(Util.TABLE_NAME, new String[]{Util.COL_1, Util.COL_2, Util.COL_3},
                 Util.COL_1 + "=?", new String[] {String.valueOf(id)}, null, null, null, null);
          if (cursor != null)
             cursor.moveToFirst();
-            User guest = new User(cursor.getInt(0),
-                    cursor.getString(1), cursor.getString(2));
+            User guest = new User(cursor.getInt(0),cursor.getString(1), cursor.getString(2));
         return guest;
+    }
+
+    public Cursor readAllData(){
+        String query = "SELECT * FROM " + Util.TABLE_NAME;
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (db != null){
+            cursor = db.rawQuery(query, null);
+        }
+        return cursor;
     }
 
     public int updateUser(User user){

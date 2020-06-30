@@ -2,13 +2,17 @@ package com.example.misreportapartment.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.misreportapartment.Adapters.MyAdapter;
@@ -21,21 +25,20 @@ import java.util.List;
 
 
 public class usersForm extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-    public final static String SHARED_PREF_USERIFNO = "SHAREDPREF";
+    public final static String SHARED_PREF_USERINFO = "SHAREDPREF";
     public final static String TEXTVIEW_USERNAME = "TEXTVIEW_TEXT_NAME";
     public final static String TEXTVIEW_PASSWORD = "TEXTVIEW_TEXT_PASS";
     private DatabaseHelper db;
-    private ListView _txtEmail, _txtPhone;
-    ArrayList<User> arrayList;
-    MyAdapter myAdapter;
+    private TextView _txtEmail, _txtPhone;
+    private Button logout;
+    ArrayList<String> arrayList;
     Spinner spinner;
     ArrayAdapter<CharSequence> arrayAdapter;
-    String user;
-    String phone;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_users_form);
+        logout = findViewById(R.id.btnLogout);
         spinner = findViewById(R.id.spinner1);
         arrayAdapter = ArrayAdapter.createFromResource(this, R.array.apartment, android.R.layout.simple_spinner_item);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -46,49 +49,28 @@ public class usersForm extends AppCompatActivity implements AdapterView.OnItemSe
         arrayList = new ArrayList<>();
         _txtEmail = findViewById(R.id.listView1);
         _txtPhone = findViewById(R.id.listView2);
-        List<User> guestModels = db.getUserInfo();
+
+        User users = db.getUserInfo(1);
         StringBuilder userName = new StringBuilder();
         StringBuilder password = new StringBuilder();
-        userName.append("Username " + guestModels.get(0).getUserName());
-        password.append(" Phone " + guestModels.get(0).getPhone());
-        _txtEmail.setSelection(1);
-        _txtPhone.setSelection(2);
+        userName.append("Username " + users.getUserName());
+        password.append(" Phone " + users.getPhone());
+        _txtEmail.setText(userName);
+        _txtPhone.setText(password);
+
         spinner.setOnItemSelectedListener(this);
-
+        storeDataInArrays();
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent LogoutIntent = new Intent(usersForm.this, Login.class);
+                startActivity(LogoutIntent);
+            }
+        });
     }
-
-    /*
-    private void loadDataInListView() {
-        arrayList = db.getUserInfo();
-        myAdapter = new MyAdapter(this,arrayList);
-        _txtEmail.setAdapter(myAdapter);
-        _txtPhone.setAdapter(myAdapter);
-        myAdapter.notifyDataSetChanged();
-    }
-
-     */
 
     public void logout(View view) {
     }
-    public void loadData(){
-        SharedPreferences sharedPrefName = getSharedPreferences(SHARED_PREF_USERIFNO, MODE_PRIVATE);
-        user = sharedPrefName.getString(TEXTVIEW_USERNAME, "");
-        phone = sharedPrefName.getString(TEXTVIEW_PASSWORD, "");
-        Toast.makeText(this, "user: " + user + " phone: "+ phone, Toast.LENGTH_SHORT).show();
-    }
-    public void saveUsername(){
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_USERIFNO, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(TEXTVIEW_USERNAME, user);
-        editor.apply();
-    }
-    public void savePassword(){
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_USERIFNO, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(TEXTVIEW_PASSWORD, phone);
-        editor.apply();
-    }
-
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String text = parent.getItemAtPosition(position).toString();
@@ -98,5 +80,19 @@ public class usersForm extends AppCompatActivity implements AdapterView.OnItemSe
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+    void storeDataInArrays(){
+        Cursor cursor = db.readAllData();
+        if (cursor.getCount() == 0){
+            Toast.makeText(this, "No data", Toast.LENGTH_SHORT).show();
+        }else {
+            while (cursor.moveToNext()){
+                arrayList.add(cursor.getString(0));
+                Toast.makeText(getApplicationContext(), " Id: " + cursor.getString(0), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), " User: " + cursor.getString(1), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), " Phone: " + cursor.getString(2), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), " Password: " + cursor.getString(3), Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }

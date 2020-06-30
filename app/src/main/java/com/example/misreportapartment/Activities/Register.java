@@ -29,7 +29,8 @@ public class Register extends AppCompatActivity {
     private ProgressBar progressBar;
     String user;
     String phone;
-
+    String pwd;
+    String cnf_pwd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,8 +62,8 @@ public class Register extends AppCompatActivity {
                 myTextView.setText(user);
                 phone = txtPhone.getText().toString().trim();
                 myTextViewPhone.setText(phone);
-                String pwd = txtPassword.getText().toString().trim();
-                String cnf_pwd = txtCnfPassword.getText().toString().trim();
+                pwd = txtPassword.getText().toString().trim();
+                cnf_pwd = txtCnfPassword.getText().toString().trim();
                 User guestToAdd = new User(-1, user, phone,pwd);
                 boolean status = db.addUser(guestToAdd);
                 if (pwd.equals(cnf_pwd)){
@@ -85,10 +86,20 @@ public class Register extends AppCompatActivity {
                       return;
                  }
 
+                if (TextUtils.isEmpty(phone)){
+                    txtPhone.setError("Phone is required.");
+                    return;
+                }
+
                  if (TextUtils.isEmpty(pwd)){
                       txtPassword.setError("Password is required.");
                       return;
                  }
+
+                if (TextUtils.isEmpty(cnf_pwd)){
+                    txtCnfPassword.setError("Password confirmation is required.");
+                    return;
+                }
 
                  if (pwd.length() < 6){
                       txtPassword.setError("Password must be 6 or more characters");

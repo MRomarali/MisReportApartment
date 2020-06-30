@@ -15,26 +15,34 @@
         android:layout_marginTop="50dp"
         app:srcCompat="@drawable/home_logo"/>
 
-    <ListView
+    <TextView
         android:id="@+id/listView1"
-        android:layout_width="190dp"
+        android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="10dp"
         android:drawableLeft="@drawable/user_blue"
         android:hint="USERNAME"
         android:inputType="textEmailAddress"
         android:paddingLeft="2dp"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
+        android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="0dp" />
 
-    <ListView
+    <TextView
         android:id="@+id/listView2"
-        android:layout_width="190dp"
+        android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="20dp"
         android:drawableLeft="@drawable/phone_number"
         android:hint="PHONE"
         android:inputType="phone"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
+        android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="0dp" />
 
