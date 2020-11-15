@@ -1,92 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.usersForm"
     android:orientation="vertical"
-    android:gravity="center_horizontal"
-    android:background="@drawable/img_background">
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:layout_width="wrap_content"
-        android:layout_height="127dp"
-        android:layout_marginTop="50dp"
-        app:srcCompat="@drawable/home_logo"/>
-
-    <TextView
-        android:id="@+id/listView1"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="10dp"
-        android:drawableLeft="@drawable/user_blue"
-        android:hint="USERNAME"
-        android:inputType="textEmailAddress"
-        android:paddingLeft="2dp"
-        android:textColor="#000000"
-        android:textColorHint="#000000"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp" />
-
-    <TextView
-        android:id="@+id/listView2"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="20dp"
-        android:drawableLeft="@drawable/phone_number"
-        android:hint="PHONE"
-        android:inputType="phone"
-        android:textColor="#000000"
-        android:textColorHint="#000000"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp" />
-
-    <Spinner
-        android:id="@+id/spinner1"
-        android:layout_width="190dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="20dp"
-        android:background="#ffffff"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp"
-        />
+    android:padding="16dp"
+    android:gravity="center"
+    tools:context=".Activities.usersForm">
 
     <EditText
-        android:id="@+id/txtMessage"
-        android:layout_width="190dp"
-        android:layout_height="120dp"
-        android:layout_marginTop="20dp"
-        android:background="#ffffff"
-        android:drawableLeft="@drawable/mail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:id="@+id/et_to"
+        android:hint="@string/to"
+        android:padding="12dp"
+        android:background="@drawable/bg_round"
+        android:autofillHints="enter Email address" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:id="@+id/et_subject"
+        android:hint="@string/subject"
+        android:padding="12dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_round"
+        android:autofillHints="enter subject" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:inputType="text"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:id="@+id/et_message"
         android:hint="@string/message"
-        android:inputType="textMultiLine"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp" />
+        android:padding="12dp"
+        android:gravity="top"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_round"
+        android:autofillHints="enter message" />
 
     <Button
-        android:id="@+id/btn_add"
-        android:layout_width="190dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="20dp"
-        android:background="#24a0ed"
-        android:textColor="#ffffff"
-        android:text="@string/send"
-        tools:layout_editor_absoluteX="161dp" />
-
-    <Button
-        android:id="@+id/btnLogout"
-        android:layout_width="190dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="20dp"
-        android:background="#24a0ed"
-        android:onClick="logout"
-        android:text="Logout"
-        android:textColor="#ffffff"
-        tools:layout_editor_absoluteX="161dp" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/bt_send"
+        android:text="@string/SEND_GMAIL"
+        android:layout_marginTop="8dp"/>
 
 </LinearLayout>

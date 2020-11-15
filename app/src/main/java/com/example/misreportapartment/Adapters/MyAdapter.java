@@ -42,8 +42,8 @@ public class MyAdapter extends BaseAdapter {
 
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.activity_users_form, null);
-            TextView t1_name = convertView.findViewById(R.id.listView1);
-            TextView t1_phone = convertView.findViewById(R.id.listView2);
+            TextView t1_name = convertView.findViewById(R.id.et_to);
+            TextView t1_phone = convertView.findViewById(R.id.et_subject);
             User guestModel = arrayList.get(position);
             t1_name.setText(guestModel.getUserName());
             t1_phone.setText(guestModel.getPhone());

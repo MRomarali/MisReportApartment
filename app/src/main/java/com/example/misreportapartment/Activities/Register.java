@@ -18,9 +18,6 @@ import com.example.misreportapartment.Model.User;
 import com.example.misreportapartment.R;
 
 public class Register extends AppCompatActivity {
-    public final static String SHARED_PREF_USERIFNO = "SHAREDPREF";
-    public final static String TEXTVIEW_USERNAME = "TEXTVIEW_TEXT_NAME";
-    public final static String TEXTVIEW_PASSWORD = "TEXTVIEW_TEXT_PASS";
 
     private Button btnReg;
     private TextView myTextViewLogin, myTextView, myTextViewPhone;
@@ -106,35 +103,8 @@ public class Register extends AppCompatActivity {
                       return;
                  }
                 progressBar.setVisibility(View.VISIBLE);
-                saveUsername();
-                savePassword();
-            }
-        });
-        btnReg.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                loadData();
-                return true;
-            }
-        });
-    }
 
-    public void saveUsername(){
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_USERIFNO, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(TEXTVIEW_USERNAME, user);
-        editor.apply();
-    }
-    public void savePassword(){
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_USERIFNO, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(TEXTVIEW_PASSWORD, phone);
-        editor.apply();
-    }
-    public void loadData(){
-        SharedPreferences sharedPrefName = getSharedPreferences(SHARED_PREF_USERIFNO, MODE_PRIVATE);
-        user = sharedPrefName.getString(TEXTVIEW_USERNAME, "");
-        phone = sharedPrefName.getString(TEXTVIEW_PASSWORD, "");
-        Toast.makeText(this, "user: " + user + " phone: "+ phone, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

@@ -11,9 +11,6 @@ import androidx.annotation.Nullable;
 import com.example.misreportapartment.Model.User;
 import com.example.misreportapartment.Utils.Util;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class DatabaseHelper extends SQLiteOpenHelper {
     public DatabaseHelper(@Nullable Context context) {
         super(context, Util.DATABASE_NAME,null, Util.DATABASE_VERSION);
@@ -63,32 +60,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return false;
     }
 
-    /*public List<User> getUserInfo(){
-
-        List<User> result = new ArrayList<>();
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        String get_all_info_query = "SELECT * FROM " + Util.TABLE_NAME;// + " WHERE username = " + Util.COL_2
-
-        Cursor cursor = db.rawQuery(get_all_info_query, null);
-
-        if (cursor.moveToFirst()){
-            do {
-                User guest = new User();
-                guest.setId(cursor.getInt(0));
-                guest.setUserName(cursor.getString(1));
-                guest.setPhone(cursor.getString(2));
-                guest.setPassword(cursor.getString(3));
-                result.add(guest);
-            }
-            while (cursor.moveToNext());
-        }
-        cursor.close();
-        return result;
-    }
-
-     */
-
     public User getUserInfo(int id){
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -96,31 +67,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Util.COL_1 + "=?", new String[] {String.valueOf(id)}, null, null, null, null);
          if (cursor != null)
             cursor.moveToFirst();
-            User guest = new User(cursor.getInt(0),cursor.getString(1), cursor.getString(2));
+            User guest = new User(Integer.parseInt(cursor.getString(0)),cursor.getString(1), cursor.getString(2));
         return guest;
-    }
-
-    public Cursor readAllData(){
-        String query = "SELECT * FROM " + Util.TABLE_NAME;
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        Cursor cursor = null;
-        if (db != null){
-            cursor = db.rawQuery(query, null);
-        }
-        return cursor;
-    }
-
-    public int updateUser(User user){
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(Util.COL_2, user.getUserName());
-        contentValues.put(Util.COL_3, user.getPhone());
-        contentValues.put(Util.COL_4, user.getPassword());
-
-        //Update row
-        return db.update(Util.TABLE_NAME, contentValues, Util.COL_1 + "=?",
-                new String[]{String.valueOf(Util.COL_1)});
-
     }
 }
